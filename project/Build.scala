@@ -18,8 +18,18 @@ object ApplicationBuild extends Build {
   val main = play.Project(appName, appVersion, appDependencies).settings(
     // Add your own project settings here      
   ).dependsOn(
-    layeredInfrastructure,
-    layeredDomain
+    layeredApplication,
+    layeredDomain,
+    layeredInfrastructure
+  )
+
+  lazy val layeredApplication = play.Project(
+    name = "layered-application",
+    path= file("modules/layered-application"),
+    settings = Project.defaultSettings ++ com.typesafe.sbtidea.SbtIdeaPlugin.ideaSettings
+  ).dependsOn(
+    layeredDomain,
+    layeredInfrastructure
   )
 
   lazy val layeredDomain = Project(
