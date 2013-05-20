@@ -9,6 +9,8 @@ object ApplicationBuild extends Build {
 
   override def settings = super.settings ++ com.typesafe.sbtidea.SbtIdeaPlugin.ideaSettings
 
+  aggregate in Test := true
+
   val appDependencies = Seq(
     // Add your project dependencies here,
     jdbc,
