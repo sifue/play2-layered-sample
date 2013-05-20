@@ -17,6 +17,10 @@ object ApplicationBuild extends Build {
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
     // Add your own project settings here      
+  ).aggregate(
+    layeredApplication,
+    layeredDomain,
+    layeredInfrastructure
   ).dependsOn(
     layeredApplication,
     layeredDomain,
@@ -27,6 +31,9 @@ object ApplicationBuild extends Build {
     name = "layered-application",
     path= file("modules/layered-application"),
     settings = Project.defaultSettings ++ com.typesafe.sbtidea.SbtIdeaPlugin.ideaSettings
+  ).aggregate(
+    layeredDomain,
+    layeredInfrastructure
   ).dependsOn(
     layeredDomain,
     layeredInfrastructure
@@ -36,6 +43,8 @@ object ApplicationBuild extends Build {
     id = "layered-domain",
     base = file("modules/layered-domain"),
     settings = Project.defaultSettings ++ com.typesafe.sbtidea.SbtIdeaPlugin.ideaSettings
+  ).aggregate(
+    layeredInfrastructure
   ).dependsOn(
     layeredInfrastructure
   )
